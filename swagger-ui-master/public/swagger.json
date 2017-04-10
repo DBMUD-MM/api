@@ -20,6 +20,9 @@ paths:
       summary: Time tracking durations
       description: |
         The duration endpoint gives access to *weighted* time tracking values in crewmeister (eg. for use in statistics).
+      tags: 
+        - Time Tracking
+        - Statistics
       parameters:
         - $ref: '#/parameters/start_time'
         - $ref: '#/parameters/end_time'
