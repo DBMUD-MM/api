@@ -4,78 +4,83 @@ swagger: '2.0'
 info:
   title: Crewmeister API
   description: Move your app forward with the Crewmeister API
-  version: "1.0.0"
+  version: "2.0.0"
 # the domain of the service
-host: api.crewmeister.com
+host: crewmeister.com
 # array of all schemes that your API supports
 schemes:
   - https
 # will be prefixed to all paths
-basePath: /v1
+basePath: /api/v2
 produces:
   - application/json
 paths:
-  /products:
+  /crew/:crew_id/time-tracking/stamps:
     get:
-      summary: Product Types
+      summary: Time tracking stamps
       description: |
-        The Products endpoint returns information about the *Crewmeister* products
-        offered at a given location. The response includes the display name
-        and other details about each product, and lists the products in the
-        proper display order.
+        The stamps endpoint responds information about the raw/unweighted time trackings
+        of a given crew. Stamps containing the same *clockInTimestamp* attribute belong 
+        to one *stamp-chain*.
       parameters:
-        - name: latitude
+        - name: start_time
           in: query
-          description: Latitude component of location.
+          description: Start time from where the stamps should be fetched.
           required: true
-          type: number
-          format: double
-        - name: longitude
+          type: string
+          format: date
+        - name: end_time
           in: query
-          description: Longitude component of location.
+          description: End time until when the stamps should be fetched.
           required: true
-          type: number
-          format: double
+          type: string
+          format: date
+        - name: user_ids
+          in: query
+          description: A comma seperated list of user_ids for which the user_ids should be filtered.
+          required: false
+          type: string
+          format: comma-seperated-list
       tags:
-        - Products
+        - Time Tracking
       responses:
         200:
-          description: An array of products
+          description: An array of stamps
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Product'
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
-
+            type: object
+            properties:
+              message:
+                type: string
+                description: A simple status message.
+              status_code:  
+                type: integer
+                description: A unique status code.
+              payload: 
+                type: array
+                items:
+                  $ref: '#/definitions/Stamps'
 definitions:
-  Product:
+  Stamps:
     type: object
     properties:
-      product_id:
-        type: string
-        description: Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.
-      description:
-        type: string
-        description: Description of product.
-      display_name:
-        type: string
-        description: Display name of product.
-      capacity:
-        type: string
-        description: Capacity of product. For example, 4 people.
-      image:
-        type: string
-        description: Image URL representing the product.
-  Error:
-    type: object
-    properties:
-      code:
+      timeAccount:
         type: integer
-        format: int32
-      message:
+        description: The time account.
+      timestamp: 
         type: string
-      fields:
+        description: ISO8601
+      note: 
         type: string
+        description: A note
+      groupId:
+        type: integer
+        description: The group id
+      location: 
+        type: string
+        description: A note
+      clockInTimestamp:
+        type: string
+        description: ISO8601
+      userId: 
+        type: integer
+        description: The group id
