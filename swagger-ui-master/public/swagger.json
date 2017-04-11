@@ -72,6 +72,13 @@ paths:
         - $ref: '#/parameters/start_time'
         - $ref: '#/parameters/end_time'
         - $ref: '#/parameters/user_id_filter'
+        - name: timestamp
+          in: query
+          description: |
+            Warning! This parameter might change it's behaviour in the future. (Use startTime == endTime == date to get a chain of stamps for a point in time)
+            In the early days of crewmeister it was possible to have multiple overlapping work time periods at the same time. In some cases this leads to unexpected behaviour. If one wants to render the current work time status (eg. mini-app) and there are overlapping work time periods the client doesn't know which one to pick. In this case the one period with a stop work stamp will overrule all other work time periods for the given timestamp.
+          required: false
+          type: boolean
       tags:
         - Time Tracking
       responses:
