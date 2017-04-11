@@ -117,14 +117,14 @@ parameters:
     name: startTime
     in: query
     description: Start time from where the stamps should be fetched.
-    required: true
+    required: false
     type: string
     format: time
   end_time:
     name: endTime
     in: query
     description: End time from where the stamps should be fetched.
-    required: true
+    required: false
     type: string
     format: time
 
