@@ -39,10 +39,13 @@ paths:
             - group
         - name: granularity
           in: query
-          description: The time granularity on which durations should be grouped by.
-          required: true
+          description: | 
+            The time granularity on which durations should be grouped by. 
+            If this parameter is unset or none the times of the whole given time duration (start_time, end_time) will be summed up into one value. 
+          required: false
           type: string
           enum:
+            - none
             - day
             - week
             - month
