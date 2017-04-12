@@ -41,7 +41,7 @@ paths:
           in: query
           description: | 
             The time granularity on which durations should be grouped by. 
-            If this parameter is unset or none the times of the whole given time duration (start_time, end_time) will be summed up into one value. 
+            If the paramter is none or unset the api responds the weighted time tracking durations for a given date range (start_time, end_time) without splitting the durations by a given granularity.
           required: false
           type: string
           enum:
