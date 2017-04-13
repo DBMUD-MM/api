@@ -15,6 +15,31 @@ basePath: /api/v2
 produces:
   - application/json
 paths:
+  /crew/:crew_id/time-tracking/stamp-chains:
+    delete:
+      description: |
+        Deletes all related stamps for for a given timestamp (dateTime).
+      tags: 
+        - Time Tracking
+      parameters:
+        - $ref: '#/parameters/timestamp'
+        - name: userId
+          in: query
+          description: The id of the user for whom the stamp chain should be deleted. Defaults to the authenticated user_id when this parameter is not given.
+          required: false
+          type: integer
+      responses:
+        200:
+          description: The stamp chain was deleted
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A status message.
+              status_code:  
+                type: integer
+                description: A unique status code.
   /crew/:crew_id/time-tracking/durations:
     get:
       summary: Time tracking durations
@@ -99,9 +124,15 @@ paths:
               payload: 
                 type: array
                 items:
-                  $ref: '#/definitions/Stamp'
-                  
+                  $ref: '#/definitions/Stamp'     
 parameters:
+  timestamp: 
+    name: timestamp
+    in: query
+    description: An iso timestamp
+    required: false
+    type: string
+    format: comma-separated-list
   user_id_filter:
     name: userIds
     in: query
