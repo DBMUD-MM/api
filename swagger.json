@@ -21,6 +21,7 @@ paths:
         Deletes all related stamps for for a given timestamp (dateTime).
       tags: 
         - Time Tracking
+        - Not implemented yet
       parameters:
         - $ref: '#/parameters/timestamp'
         - name: userId
@@ -41,6 +42,9 @@ paths:
                 type: integer
                 description: A unique status code.
     post:
+      tags: 
+        - Time Tracking
+        - Not implemented yet
       summary: Create multiple correlated stamps.
       parameters:
         - name: userId
