@@ -40,6 +40,37 @@ paths:
               status_code:  
                 type: integer
                 description: A unique status code.
+    post:
+      summary: Create multiple correlated stamps.
+      parameters:
+        - name: userId
+          in: query
+          description: The id of the user for whom the stamp chain should be created. Defaults to the authenticated user_id when this parameter is not given.
+          required: false
+          type: integer
+        - name: payload
+          in: body
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Stamp'
+      responses: 
+        200: 
+          description: An array of stamps
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A simple status message.
+              status_code:  
+                type: integer
+                description: A unique status code.
+              payload: 
+                type: array
+                items:
+                  $ref: '#/definitions/Stamp'
+                  
   /crew/:crew_id/time-tracking/durations:
     get:
       summary: Time tracking durations
