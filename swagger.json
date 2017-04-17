@@ -1,5 +1,3 @@
-# this is an example of the Crewmeister API
-# as a demonstration of an API spec in YAML
 swagger: '2.0'
 info:
   title: Crewmeister API
@@ -15,7 +13,7 @@ basePath: /api/v2
 produces:
   - application/json
 paths:
-  /crew/:crew_id/time-tracking/stamp-chains:
+  /crew/{crew_id}/time-tracking/stamp-chains:
     delete:
       description: |
         Deletes all related stamps for for a given timestamp (dateTime).
@@ -23,6 +21,7 @@ paths:
         - Time Tracking
         - Not implemented yet
       parameters:
+        - $ref: '#/parameters/crew_id'
         - $ref: '#/parameters/timestamp'
         - name: userId
           in: query
@@ -47,6 +46,7 @@ paths:
         - Not implemented yet
       summary: Create multiple correlated stamps.
       parameters:
+        - $ref: '#/parameters/crew_id'
         - name: userId
           in: query
           description: The id of the user for whom the stamp chain should be created. Defaults to the authenticated user_id when this parameter is not given.
@@ -75,7 +75,7 @@ paths:
                 items:
                   $ref: '#/definitions/Stamp'
                   
-  /crew/:crew_id/time-tracking/durations:
+  /crew/{crew_id}/time-tracking/durations:
     get:
       summary: Time tracking durations
       description: |
@@ -84,6 +84,7 @@ paths:
         - Time Tracking
         - Statistics
       parameters:
+        - $ref: '#/parameters/crew_id'
         - $ref: '#/parameters/start_time'
         - $ref: '#/parameters/end_time'
         - $ref: '#/parameters/user_id_filter'
@@ -126,12 +127,13 @@ paths:
                 items:
                   $ref: '#/definitions/Duration'
   
-  /crew/:crew_id/time-tracking/stamps:
+  /crew/{crew_id}/time-tracking/stamps:
     get:
       summary: Time tracking stamps
       description: |
         The stamps endpoint responds information about the raw/unweighted time trackings of a given crew. Stamps containing the same *clockInTimestamp* attribute belong to one *stamp-chain*.
       parameters:
+        - $ref: '#/parameters/crew_id'
         - $ref: '#/parameters/start_time'
         - $ref: '#/parameters/end_time'
         - $ref: '#/parameters/user_id_filter'
@@ -161,6 +163,11 @@ paths:
                 items:
                   $ref: '#/definitions/Stamp'     
 parameters:
+  crew_id:
+    name: crew_id
+    in: path
+    type: integer
+    required: true
   timestamp: 
     name: timestamp
     in: query
