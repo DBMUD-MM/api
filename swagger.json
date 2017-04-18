@@ -15,13 +15,14 @@ produces:
 paths:
   /crew/{crew_id}/time-tracking/stamp-chains:
     delete:
+      operationId: deleteStampChain
       description: |
         Deletes all related stamps for for a given timestamp (dateTime).
       tags: 
         - Time Tracking
         - Not implemented yet
       parameters:
-        - $ref: '#/parameters/crew_id'
+        - $ref: '#/parameters/crew_id_in_path'
         - $ref: '#/parameters/timestamp'
         - name: userId
           in: query
@@ -46,7 +47,7 @@ paths:
         - Not implemented yet
       summary: Create multiple correlated stamps.
       parameters:
-        - $ref: '#/parameters/crew_id'
+        - $ref: '#/parameters/crew_id_in_path'
         - name: userId
           in: query
           description: The id of the user for whom the stamp chain should be created. Defaults to the authenticated user_id when this parameter is not given.
@@ -84,20 +85,17 @@ paths:
         - Time Tracking
         - Statistics
       parameters:
-        - $ref: '#/parameters/crew_id'
+        - $ref: '#/parameters/crew_id_in_path'
         - $ref: '#/parameters/start_time'
         - $ref: '#/parameters/end_time'
         - $ref: '#/parameters/user_id_filter'
         - $ref: '#/parameters/group_id_filter'
         - name: groupBy
           in: query
-          description: The entities on which the durations should be grouped by. If one wants to get all time durations for a user, he should group by user.
+          description: The entities on which the durations should be grouped by. If one wants to get all time durations for a user, he should group by user. Valid options are "group_id" and "user_id".
           type: string
           required: false
           format: comma-separated-list
-          enum:
-            - user
-            - group
         - name: granularity
           in: query
           description: | 
@@ -133,7 +131,7 @@ paths:
       description: |
         The stamps endpoint responds information about the raw/unweighted time trackings of a given crew. Stamps containing the same *clockInTimestamp* attribute belong to one *stamp-chain*.
       parameters:
-        - $ref: '#/parameters/crew_id'
+        - $ref: '#/parameters/crew_id_in_path'
         - $ref: '#/parameters/start_time'
         - $ref: '#/parameters/end_time'
         - $ref: '#/parameters/user_id_filter'
@@ -163,7 +161,7 @@ paths:
                 items:
                   $ref: '#/definitions/Stamp'     
 parameters:
-  crew_id:
+  crew_id_in_path:
     name: crew_id
     in: path
     type: integer
