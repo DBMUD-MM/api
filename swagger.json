@@ -161,9 +161,54 @@ paths:
                 items:
                   $ref: '#/definitions/Stamp'     
 
+  /prices/config:
+    get:
+      summary: Get the configuration for the price calculator
+      tags:
+        - Payment
+      responses:
+        200:
+          description: An object containing all known products and crew sizes
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A simple status message.
+              status_code:  
+                type: integer
+                description: A unique status code.
+                example: 200
+              payload: 
+                type: object
+                properties:
+                  products: 
+                    type: array
+                    items: 
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Vacation planner"
+                  crew_sizes: 
+                    type: array
+                    items: 
+                      type: object
+                      properties:
+                        max:
+                          type: integer
+                          example: 10
+                        name:
+                          type: string
+                          example: "1-10"
+
+      
   /prices/calculate:
     get:
-      summary: Calculate product price
+      summary: Calculate a product price
       description: |
         Given the relevant attributes for a crewmeister subscription, it returns the final price and details how it was calculated, includung individual prices and optional discounts.
       parameters:
