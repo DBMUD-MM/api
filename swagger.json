@@ -308,7 +308,7 @@ definitions:
     properties:
       finalPrice:
         type: string
-        example: "20,92"
+        example: "20,92 €"
       discounts: 
         type: array
         items:
@@ -321,7 +321,7 @@ definitions:
         example: "Jährliche Zahlung"
       amount:
         type: string
-        example: "2,00"
+        example: "2,00 €"
   PaymentProduct:
     type: object
     properties:
