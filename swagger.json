@@ -20,7 +20,6 @@ paths:
         Deletes all related stamps for for a given timestamp (dateTime).
       tags: 
         - Time Tracking
-        - Not implemented yet
       parameters:
         - $ref: '#/parameters/crew_id_in_path'
         - $ref: '#/parameters/timestamp'
@@ -44,7 +43,6 @@ paths:
     post:
       tags: 
         - Time Tracking
-        - Not implemented yet
       summary: Create multiple correlated stamps.
       parameters:
         - $ref: '#/parameters/crew_id_in_path'
@@ -145,7 +143,7 @@ paths:
         - name: starts_in_range
           in: query
           description: |
-            Is an optional parameter which determines wether to include stamps which start in or are relevant to the given timerange. The following chart will explain the differentiation.  
+            Is an optional parameter (default is false) which determines wether to include stamps which start in or are relevant to the given timerange. The following chart will explain the differentiation.   
             ```
                       Given date range              +-------------+---------------+
                   |----------------------|          |  relevant   | startsInRange |
@@ -165,7 +163,7 @@ paths:
             💻 Start work
             🥙 Start break
             🍻 Stop work
-          ```
+            ```
           required: false
           type: boolean
       tags:
