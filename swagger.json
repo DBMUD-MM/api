@@ -142,6 +142,32 @@ paths:
             In the early days of crewmeister it was possible to have multiple overlapping work time periods at the same time. In some cases this leads to unexpected behaviour. If one wants to render the current work time status (eg. mini-app) and there are overlapping work time periods the client doesn't know which one to pick. In this case the one period with a stop work stamp will overrule all other work time periods for the given timestamp.
           required: false
           type: boolean
+        - name: starts_in_range
+          in: query
+          description: |
+            Is an optional parameter which determines wether to include stamps which start in or are relevant to the given timerange. The following chart will explain the differentiation.  
+            ```
+                      Given date range              +-------------+---------------+
+                  |----------------------|          |  relevant   | startsInRange |
+                                            💻  🍻   +-------------+---------------+
+                                            |---|   |   false     |     false     |
+            💻 🍻                                    +-------------+---------------+
+            |--|                                    |   false     |     false     |
+              💻    🥙     💻      🍻                +-------------+---------------+
+              |------|------|-------|               |    true     |     false     |
+                   💻     🥙     💻      🍻          +-------------+---------------+
+                   |------|------|-------|          |    true     |     true      |
+            💻                                🍻    +-------------+---------------+
+            |---------------------------------|     |    true     |     false     |
+                                      💻      🍻    +-------------+---------------+
+                                      |-------|     |    true     |     true      |
+            Legend:                                 +-------------+---------------+  
+            💻 Start work
+            🥙 Start break
+            🍻 Stop work
+          ```
+          required: false
+          type: boolean
       tags:
         - Time Tracking
       responses:
