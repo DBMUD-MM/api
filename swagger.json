@@ -103,6 +103,8 @@ paths:
           type: string
           enum:
             - none
+            - period
+            - stamp_chain
             - day
             - week
             - month
