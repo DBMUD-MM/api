@@ -88,6 +88,16 @@ paths:
         - $ref: '#/parameters/end_time'
         - $ref: '#/parameters/user_id_filter'
         - $ref: '#/parameters/group_id_filter'
+        - name: time_account
+          in: query
+          description: | 
+            The type of durations one wants to get over the api. Available options are work (default) and break. 
+          type: string
+          enum:
+            - work
+            - break
+          required: false
+          
         - name: groupBy
           in: query
           description: The entities on which the durations should be grouped by. If one wants to get all time durations for a user, he should group by user. Valid options are "group_id" and "user_id".
@@ -103,8 +113,6 @@ paths:
           type: string
           enum:
             - none
-            - period
-            - stamp_chain
             - day
             - week
             - month
@@ -147,28 +155,27 @@ paths:
           required: false
           type: boolean
           description: |
-            Is an optional parameter (default is false) which determines wether to include stamps which start in or are relevant to the given timerange. The following chart will explain the differentiation.   
-              ```
+            Is an optional parameter (default is false) which determines wether to include stamps which start in or are relevant to the given timerange. The following chart will explain the differentiation.
+            ```
                       Given date range              +-------------+---------------+
                   |----------------------|          |  relevant   | startsInRange |
                                             💻  🍻   +-------------+---------------+
                                             |---|   |   false     |     false     |
-            💻 🍻                                  +-------------+---------------+
-            |--|                                  |   false     |     false     |
+            💻 🍻                                    +-------------+---------------+
+            |--|                                    |   false     |     false     |
               💻    🥙     💻      🍻                +-------------+---------------+
               |------|------|-------|               |    true     |     false     |
                    💻     🥙     💻      🍻          +-------------+---------------+
                    |------|------|-------|          |    true     |     true      |
-            💻                                🍻   +-------------+---------------+
-            |---------------------------------|   |    true     |     false     |
+            💻                                🍻    +-------------+---------------+
+            |---------------------------------|     |    true     |     false     |
                                       💻      🍻    +-------------+---------------+
                                       |-------|     |    true     |     true      |
-            Legend:                               +-------------+---------------+  
+            Legend:                                 +-------------+---------------+  
             💻 Start work
             🥙 Start break
             🍻 Stop work
             ```
-          
       tags:
         - Time Tracking
       responses:
