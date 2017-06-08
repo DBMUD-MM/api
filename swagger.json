@@ -84,8 +84,31 @@ paths:
         - Statistics
       parameters:
         - $ref: '#/parameters/crew_id_in_path'
-        - $ref: '#/parameters/start_time'
-        - $ref: '#/parameters/end_time'
+        - name: start_date
+          in: query
+          description: DEPRECATED! Use "from" instead.
+          required: false
+          type: string
+          format: ISO8601 date or time
+        - name: end_date
+          in: query
+          description: DEPRECATED! Use "to" instead.
+          required: false
+          type: string
+          format: ISO8601 date or time
+        - name: from
+          in: query
+          description: Start time or date.
+          required: false
+          type: string
+          format: ISO8601 date or time
+        - name: to
+          in: query
+          description: Start time or date.
+          required: false
+          type: string
+          format: ISO8601 date or time
+        
         - $ref: '#/parameters/user_id_filter'
         - $ref: '#/parameters/group_id_filter'
         - name: time_account
