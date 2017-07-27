@@ -51,6 +51,12 @@ paths:
           description: The id of the user for whom the stamp chain should be created. Defaults to the authenticated user_id when this parameter is not given.
           required: false
           type: integer
+        - name: delete_stamp_chain_at
+          in: query
+          description: When updating a stamp chain one wants to delete an old stamp chain as well in one API call. This param allows to delete a stamp chain at a given point in time.
+          required: false
+          type: string
+          format: iso8601
         - name: payload
           in: body
           schema:
