@@ -428,11 +428,11 @@ definitions:
         type: string
         description: ISO8601 Datetime when the booking ended.
         example: '2017-01-01T23:59:59+02:00'
-      correlation_date:
+      correlationDate:
         type: string
         description: Date where the booking is correlated to.
         example: '2017-01-01'
-      clock_in_timestamp:
+      clockInTimestamp:
         type: string
         description: ISO8601 Datetime of the clocking.
         example: '2017-01-01T13:15:00+02:00'
@@ -441,15 +441,15 @@ definitions:
         description: >
           Duration in seconds.
         example: 'PT60S'
-      crew_id:
+      crewId:
         type: integer
         description: Crew ID
         example: 1
-      user_id:
+      userId:
         type: integer
         description: User ID
         example: 1
-      time_account:
+      timeAccount:
         type: integer
         enum:
           - 0
@@ -462,7 +462,7 @@ definitions:
 
           * 2: break
         example: 1
-      group_id:
+      groupId:
         type: integer
         description: Group ID
         example: 1
@@ -470,19 +470,19 @@ definitions:
         type: string
         description: Note
         example: 'Project X'
-      start_location_latitude:
+      startLocationLatitude:
         type: number
         description: Latitude when bookings started
         example: 48.134757
-      start_location_longitude:
+      startLocationLongitude:
         type: number
         description: Longitude when bookings started
         example: 11.707422
-      end_location_latitude:
+      endLocationLatitude:
         type: number
         description: Latitude when bookings ended
         example: 48.134757
-      end_location_longitude:
+      endLocationLongitude:
         type: number
         description: Longitude when bookings ended
         example: 11.707422
