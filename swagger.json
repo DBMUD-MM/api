@@ -473,19 +473,19 @@ definitions:
       startLocationLatitude:
         type: number
         description: Latitude when bookings started
-        example: 48.134757
+        example: 48.131603
       startLocationLongitude:
         type: number
         description: Longitude when bookings started
-        example: 11.707422
+        example: 11.549678
       endLocationLatitude:
         type: number
         description: Latitude when bookings ended
-        example: 48.134757
+        example: 48.131603
       endLocationLongitude:
         type: number
         description: Longitude when bookings ended
-        example: 11.707422
+        example: 11.549678
 
   PaymentPeriodPrice:
     type: object
