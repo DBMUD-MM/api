@@ -1,0 +1,25 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "Crewmeister API Documentation",
+  "main": "index.js",
+  "scripts": {
+    "start": "swagger-ui-watcher swagger.json ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crewmeister/api.git"
+  },
+  "keywords": [
+    "API"
+  ],
+  "author": "Crewmeister",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/crewmeister/api/issues"
+  },
+  "homepage": "https://github.com/crewmeister/api#readme",
+  "dependencies": {
+    "swagger-ui-watcher": "^1.0.6"
+  }
+}
