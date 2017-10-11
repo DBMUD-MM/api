@@ -4,7 +4,7 @@
   "description": "Crewmeister API Documentation",
   "main": "index.js",
   "scripts": {
-    "start": "swagger-ui-watcher swagger.json ./"
+    "start": "swagger-ui-watcher swagger.yaml ./"
   },
   "repository": {
     "type": "git",
