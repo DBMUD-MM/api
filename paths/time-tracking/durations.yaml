@@ -1,0 +1,111 @@
+get:
+  summary: Time tracking durations
+  description: |
+    The duration endpoint gives access to *weighted* time tracking values in crewmeister (eg. for use in statistics).
+  tags:
+    - Time Tracking
+  parameters:
+    - name: crew_id
+      in: path
+      type: integer
+      required: true
+    - name: start_date
+      in: query
+      description: DEPRECATED! Use "from" instead.
+      required: false
+      type: string
+      format: ISO8601 date or time
+    - name: end_date
+      in: query
+      description: DEPRECATED! Use "to" instead.
+      required: false
+      type: string
+      format: ISO8601 date or time
+    - name: from
+      in: query
+      description: Start time or date.
+      required: false
+      type: string
+      format: ISO8601 date or time
+    - name: to
+      in: query
+      description: Start time or date.
+      required: false
+      type: string
+      format: ISO8601 date or time
+    - name: userIds
+      in: query
+      description: A comma seperated list of user_ids which should be filtered. If parameter is missing this filter won't be applied.
+      required: false
+      type: string
+      format: comma-separated-list
+    - name: groupIds
+      in: query
+      description: A comma seperated list of group_ids which should be filtered. If parameter is missing this filter won't be applied.
+      required: false
+      type: string
+      format: comma-separated-list
+    - name: time_account
+      in: query
+      description: |
+        The type of durations one wants to get over the api. Available options are work (default) and break.
+      type: string
+      enum:
+        - work
+        - break
+      required: false
+
+    - name: groupBy
+      in: query
+      description: The entities on which the durations should be grouped by. If one wants to get all time durations for a user, he should group by user. Valid options are "group_id" and "user_id".
+      type: string
+      required: false
+      format: comma-separated-list
+    - name: granularity
+      in: query
+      description: |
+        The time granularity on which durations should be grouped by.
+        If the paramter is none or unset the api responds the weighted time tracking durations for a given date range (start_time, end_time) without splitting the durations by a given granularity.
+      required: false
+      type: string
+      enum:
+        - none
+        - day
+        - week
+        - month
+  responses:
+    200:
+      description: An array different durations
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            description: A simple status message.
+          status_code:
+            type: integer
+            description: A unique status code.
+          payload:
+            type: array
+            items:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: The type of the duration (grouped_by, total).
+                  enum:
+                    - total
+                    - grouped_by
+                index:
+                  type: integer
+                  description: The array index or offset of the duration from the given start date. If no duration was found in the given granuarity and time period, the duration isn't returned from the server.
+                value:
+                  type: string
+                  description: ISO8601 duration string
+                groupBy:
+                 type: object
+                 properties:
+                   userId:
+                     type: integer
+                   groupId:
+                     type: integer

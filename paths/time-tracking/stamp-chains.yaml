@@ -1,0 +1,121 @@
+post:
+  tags:
+    - Time Tracking
+  summary: Create multiple correlated stamps.
+  parameters:
+    - name: crew_id
+      in: path
+      type: integer
+      required: true
+    - name: userId
+      in: query
+      description: The id of the user for whom the stamp chain should be created. Defaults to the authenticated user_id when this parameter is not given.
+      required: false
+      type: integer
+    - name: delete_stamp_chain_at
+      in: query
+      description: When updating a stamp chain one wants to delete an old stamp chain as well in one API call. This param allows to delete a stamp chain at a given point in time.
+      required: false
+      type: string
+      format: iso8601
+    - name: payload
+      in: body
+      schema:
+        type: array
+        items:
+          type: object
+          properties:
+            timeAccount:
+              type: integer
+              description: The time account.
+            timestamp:
+              type: string
+              description: ISO8601
+            note:
+              type: string
+              description: A note
+            groupId:
+              type: integer
+              description: The group id
+            location:
+              type: string
+              description: A note
+            clockInTimestamp:
+              type: string
+              description: ISO8601
+            userId:
+              type: integer
+              description: The group id
+  responses:
+    200:
+      description: An array of stamps
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            description: A simple status message.
+          status_code:
+            type: integer
+            description: A unique status code.
+          payload:
+            type: array
+            items:
+              type: object
+              properties:
+                timeAccount:
+                  type: integer
+                  description: The time account.
+                timestamp:
+                  type: string
+                  description: ISO8601
+                note:
+                  type: string
+                  description: A note
+                groupId:
+                  type: integer
+                  description: The group id
+                location:
+                  type: string
+                  description: A note
+                clockInTimestamp:
+                  type: string
+                  description: ISO8601
+                userId:
+                  type: integer
+                  description: The group id
+
+delete:
+  operationId: deleteStampChain
+  description: |
+    Deletes all related stamps for for a given timestamp (dateTime).
+  tags:
+    - Time Tracking
+  parameters:
+    - name: crew_id
+      in: path
+      type: integer
+      required: true
+    - name: timestamp
+      in: query
+      description: An iso timestamp
+      required: false
+      type: string
+      format: comma-separated-list
+    - name: userId
+      in: query
+      description: The id of the user for whom the stamp chain should be deleted. Defaults to the authenticated user_id when this parameter is not given.
+      required: false
+      type: integer
+  responses:
+    200:
+      description: The stamp chain was deleted
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            description: A status message.
+          status_code:
+            type: integer
+            description: A unique status code.

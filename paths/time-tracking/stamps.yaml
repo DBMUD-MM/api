@@ -1,0 +1,100 @@
+get:
+  summary: Time tracking stamps
+  description: |
+    The stamps endpoint responds information about the raw/unweighted time trackings of a given crew. Stamps containing the same *clockInTimestamp* attribute belong to one *stamp-chain*.
+  parameters:
+    - name: crew_id
+      in: path
+      type: integer
+      required: true
+    - name: startTime
+      in: query
+      description: Start time from where the stamps should be fetched.
+      required: false
+      type: string
+      format: time
+    - name: endTime
+      in: query
+      description: End time from where the stamps should be fetched.
+      required: false
+      type: string
+      format: time
+    - name: userIds
+      in: query
+      description: A comma seperated list of user_ids which should be filtered. If parameter is missing this filter won't be applied.
+      required: false
+      type: string
+      format: comma-separated-list
+    - name: timestamp
+      in: query
+      description: |
+        Warning! This parameter might change it's behaviour in the future. (Use startTime == endTime == date to get a chain of stamps for a point in time)
+        In the early days of crewmeister it was possible to have multiple overlapping work time periods at the same time. In some cases this leads to unexpected behaviour. If one wants to render the current work time status (eg. mini-app) and there are overlapping work time periods the client doesn't know which one to pick. In this case the one period with a stop work stamp will overrule all other work time periods for the given timestamp.
+      required: false
+      type: boolean
+    - name: starts_in_range
+      in: query
+      required: false
+      type: boolean
+      description: |
+        Is an optional parameter (default is false) which determines wether to include stamps which start in or are relevant to the given timerange. The following chart will explain the differentiation.
+        ```
+                  Given date range              +-------------+---------------+
+              |----------------------|          |  relevant   | startsInRange |
+                                        💻  🍻   +-------------+---------------+
+                                        |---|   |   false     |     false     |
+        💻 🍻                                    +-------------+---------------+
+        |--|                                    |   false     |     false     |
+          💻    🥙     💻      🍻                +-------------+---------------+
+          |------|------|-------|               |    true     |     false     |
+               💻     🥙     💻      🍻          +-------------+---------------+
+               |------|------|-------|          |    true     |     true      |
+        💻                                🍻    +-------------+---------------+
+        |---------------------------------|     |    true     |     false     |
+                                  💻      🍻    +-------------+---------------+
+                                  |-------|     |    true     |     true      |
+        Legend:                                 +-------------+---------------+
+        💻 Start work
+        🥙 Start break
+        🍻 Stop work
+        ```
+  tags:
+    - Time Tracking
+  responses:
+    200:
+      description: An array of stamps
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            description: A simple status message.
+          status_code:
+            type: integer
+            description: A unique status code.
+          payload:
+            type: array
+            items:
+              type: object
+              properties:
+                timeAccount:
+                  type: integer
+                  description: The time account.
+                timestamp:
+                  type: string
+                  description: ISO8601
+                note:
+                  type: string
+                  description: A note
+                groupId:
+                  type: integer
+                  description: The group id
+                location:
+                  type: string
+                  description: A note
+                clockInTimestamp:
+                  type: string
+                  description: ISO8601
+                userId:
+                  type: integer
+                  description: The group id

@@ -1,0 +1,91 @@
+get:
+  summary: Calculate a product price
+  description: |
+    Given the relevant attributes for a crewmeister subscription, it returns the final price and details how it was calculated, includung individual prices and optional discounts.
+  parameters:
+    - name: product_ids
+      in: query
+      type: array
+      description: The selected products
+      items:
+        type: integer
+    - name: crew_size
+      in: query
+      type: integer
+      description: Number of crew members
+    - name: payment_period
+      in: query
+      type: string
+      description: The selected payment period, monthly or yearly
+      enum:
+        - monthly
+        - yearly
+    - name: voucher_code
+      in: query
+      type: string
+      description: An optional voucher code (provides discounts)
+      required: false
+  tags:
+    - Payment
+  responses:
+    200:
+      description: A price calculation result object
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            description: A simple status message.
+          status_code:
+            type: integer
+            description: A unique status code.
+            example: 200
+          payload:
+            type: object
+            properties:
+              products:
+                type: array
+                items:
+                  # PaymentProduct
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: "Zeiterfassung"
+                    amount:
+                      type: string
+                      example: "12,12"
+              firstPeriod:
+                type: object
+                properties:
+                  finalPrice:
+                    type: string
+                    example: "20,92 €"
+                  discounts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: "Jährliche Zahlung"
+                        amount:
+                          type: string
+                          example: "2,00 €"
+              recurringPeriod:
+                type: object
+                properties:
+                  finalPrice:
+                    type: string
+                    example: "20,92 €"
+                  discounts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: "Jährliche Zahlung"
+                        amount:
+                          type: string
+                          example: "2,00 €"

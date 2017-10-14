@@ -1,0 +1,68 @@
+type: object
+properties:
+  from:
+    type: string
+    description: ISO8601 Datetime when the booking started.
+    example: '2017-01-01T00:00:00+02:00'
+  to:
+    type: string
+    description: ISO8601 Datetime when the booking ended.
+    example: '2017-01-01T23:59:59+02:00'
+  correlationDate:
+    type: string
+    description: Date where the booking is correlated to.
+    example: '2017-01-01'
+  clockInTimestamp:
+    type: string
+    description: ISO8601 Datetime of the clocking.
+    example: '2017-01-01T13:15:00+02:00'
+  duration:
+    type: string
+    description: >
+      Duration in seconds.
+    example: 'PT60S'
+  crewId:
+    type: integer
+    description: Crew ID
+    example: 1
+  userId:
+    type: integer
+    description: User ID
+    example: 1
+  timeAccount:
+    type: integer
+    enum:
+      - 0
+      - 1
+      - 2
+    description: >
+      * 0: not working
+
+      * 1: working
+
+      * 2: break
+    example: 1
+  groupId:
+    type: integer
+    description: Group ID
+    example: 1
+  note:
+    type: string
+    description: Note
+    example: 'Project X'
+  startLocationLatitude:
+    type: number
+    description: Latitude when bookings started
+    example: 48.131603
+  startLocationLongitude:
+    type: number
+    description: Longitude when bookings started
+    example: 11.549678
+  endLocationLatitude:
+    type: number
+    description: Latitude when bookings ended
+    example: 48.131603
+  endLocationLongitude:
+    type: number
+    description: Longitude when bookings ended
+    example: 11.549678

@@ -1,0 +1,23 @@
+type: object
+properties:
+  timeAccount:
+    type: integer
+    description: The time account.
+  timestamp:
+    type: string
+    description: ISO8601
+  note:
+    type: string
+    description: A note
+  groupId:
+    type: integer
+    description: The group id
+  location:
+    type: string
+    description: A note
+  clockInTimestamp:
+    type: string
+    description: ISO8601
+  userId:
+    type: integer
+    description: The group id

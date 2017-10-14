@@ -1,0 +1,42 @@
+get:
+  summary: Get the configuration for the price calculator
+  tags:
+    - Payment
+  responses:
+    200:
+      description: An object containing all known products and crew sizes
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            description: A simple status message.
+          status_code:
+            type: integer
+            description: A unique status code.
+            example: 200
+          payload:
+            type: object
+            properties:
+              products:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Vacation planner"
+              crew_sizes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    max:
+                      type: integer
+                      example: 10
+                    name:
+                      type: string
+                      example: "1-10"

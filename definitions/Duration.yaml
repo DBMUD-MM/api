@@ -1,0 +1,21 @@
+type: object
+properties:
+  type:
+    type: string
+    description: The type of the duration (grouped_by, total).
+    enum:
+      - total
+      - grouped_by
+  index:
+    type: integer
+    description: The array index or offset of the duration from the given start date. If no duration was found in the given granuarity and time period, the duration isn't returned from the server.
+  value:
+    type: string
+    description: ISO8601 duration string
+  groupBy:
+   type: object
+   properties:
+     userId:
+       type: integer
+     groupId:
+       type: integer
