@@ -1,0 +1,12 @@
+version: '2.1'
+services:
+  swagger:
+    build: .
+    container_name: swagger
+    #tty: true
+    #stdin_open: true
+    ports:
+      - '8000:8000'
+    volumes:
+      - '.:/usr/src/app'
+    command: swagger-ui-watcher -h 0.0.0.0 -p 8000 /usr/src/app/swagger.yaml /usr/src/app/
