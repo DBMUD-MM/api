@@ -1,7 +1,28 @@
 swagger: '2.0'
 info:
   title: Crewmeister API
-  description: Move your app forward with the Crewmeister API
+  description: |
+    ## Session start / authentication:
+    POST https://api.crewmeister.com/api/v1/authentication/login
+    with `content-type: application/x-www-form-urlencoded`
+    
+    ```
+    Example payload form-encoded (!)
+    username: test@crewmeister.com
+    password: test1234
+    ````
+
+    Successful result: JSON-object containing the authentified user.
+    
+    E.g. 
+    `curl --cookie-jar './crewmeister-api-cookie' --cookie './crewmeister-api-cookie' -d 'username=my@email.com' -d 'password=crew9876' https://api.crewmeister.com/api/v1/authentication/login`
+    
+    Store the _crewmeister_session cookie you receive from the server.
+    In general, for each call to the API you will get a new _crewmeister_session cookie 
+    that you need to send with your next call as cookie header to the API.
+    In the example above, we use the --cookie-jar parameter to store a received cookie and the --cookie parameter to read a stored cookie from a temporary cookie file named `crewmeister-api-cookie`.
+    
+    
   version: "2.0.0"
 # the domain of the service
 host: crewmeister.com
@@ -13,6 +34,139 @@ basePath: /api/v2
 produces:
   - application/json
 paths:
+  /crew/{crew_id}/time-tracking/start-work:
+    post: 
+      operationId: start-work
+      description: |
+        Adds a new stamp with the time account start_work. Payload:
+        ```
+          {
+            userId: 644,
+            crewId: 352,
+            timestamp: "2017-08-21T12:35:21.000Z",
+            groupId: 1,
+          }
+        ```
+        After a successful start work, you can send another start work, a start break or a stop work.
+      tags: 
+        - Time Tracking
+        - Stamp
+      parameters:
+        - $ref: '#/parameters/crew_id_in_path'
+      
+      responses:
+        200:
+          description: The stamp was created
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A status message.
+              status_code:
+                type: integer
+                description: A unique status code.
+  /crew/{crew_id}/time-tracking/start-break:
+    post: 
+      operationId: start-work
+      description: |
+        Example JSON payload: user 644 starts his break at 08/21/2017, 12:40:37 (UTC) Payload:
+        ```
+          {
+            userId:  644
+            crewId:  352
+            timestamp:  "2017-08-21T12:40:37.000Z"
+          }
+        ```
+        After a stark break, you can send a start work or a stop work.
+      tags: 
+        - Time Tracking
+        - Stamp
+      parameters:
+        - $ref: '#/parameters/crew_id_in_path'
+      
+      responses:
+        200:
+          description: The stamp was created
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A status message.
+              status_code:
+                type: integer
+                description: A unique status code.
+  /crew/{crew_id}/time-tracking/stop-work:
+    post: 
+      operationId: start-work
+      description: |
+        Example JSON payload: user 644 starts stops working at 08/21/2017, 17:00:00 (UTC)
+        ```
+         {
+            userId:  644
+            crewId:  352
+            timestamp:  "2017-08-21T17:00:00.000Z"
+          }
+        ```
+        After a stop work, you can send a start work.
+      tags: 
+        - Time Tracking
+        - Stamp
+      parameters:
+        - $ref: '#/parameters/crew_id_in_path'
+      
+      responses:
+        200:
+          description: The stamp was created
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A status message.
+              status_code:
+                type: integer
+                description: A unique status code.
+                
+  /crew/{crew_id}/members:
+    delete:
+      description: |
+        Get members of crews 352. Example response:
+        ````
+        [
+          {
+              "activeTimeAccount":0,
+              "crewId":352,
+              "id":709,
+              "image":"https://crewmeister.com/system/users/avatars/e9e854eaaf9d3d7d4a49a6516c8a4bad134a0c97.jpg?1513098777",
+              "isDisabled":false,
+              "name":"Thomas Mustermann",
+              "role":"owner",
+              "userId":644,
+              "username":"tmustermann"
+          },
+          ...other members
+        ]
+        ````
+        Note: id refers to the membership of this user, userId refers to the user.
+      parameters:
+        - $ref: '#/parameters/crew_id_in_path'
+      tags:
+        - Platform
+      responses:
+        200:
+          description: All members from a crew
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A status message.
+              status_code:
+                type: integer
+                description: A unique status code.
+    
   /crew/{crew_id}/time-tracking/stamp-chains:
     delete:
       operationId: deleteStampChain
