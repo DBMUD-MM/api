@@ -4,11 +4,18 @@ info:
   title: Crewmeister API
   description: |
     # Authentication
-    The crewmeister api offers a token based authentication. There are 3 ways to send this token to our backend.
-    - Query (hightest prioroty)
+    
+    The crewmeister api offers a token based solution for authentication. After generating a token there are 3 different ways on how to send this token to our backend.
+    - Query (hightest priority)
     - Headers (recommended)
     - Cookie
+      
+    When multiple tokens are passed to the API the one with the highest priority is used for authentication. The application currently has 3 different authentication types:
+    - user
+    - crew
+    - admin
     
+    In the future more authentication types might be added. A device can be authenticated as either none, one or many of the above listed authentication types. This means that the device of a crewmeister user can be authenticated as a user and a crew (eg. while in terminal mode). Answering the question **"Who is doing something to whom?"** gets increasingly more complex the more authentication types are added. To  make this question easier to answer we have a model called 'context'. 
   
 servers:
   - url: https://api.crewmeister.com/api/v2
@@ -23,12 +30,28 @@ security:
     queryAuthenticationUserToken: [] 
   
 paths:
+  /context:
+    get: 
+      operationId: getContext
+      summary: Get the current authentication status.
+      description: Returns the ids of the **active** (= authenticated) models.
+      tags: 
+        - Authentication
+      responses:
+        200:
+          description: Returns the ids of the authenticated models.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Context'
+  
   /user/authentication:
     post: 
       operationId: createUserAuthentication
       summary: Creates a new authentication token for a user.
       tags: 
         - Authentication
+        - User
       requestBody:
         required: true
         content:
@@ -56,6 +79,7 @@ paths:
       summary: Invalidates the given authentication token
       tags: 
         - Authentication
+        - User
       parameters:
         - in: query
           name: all
@@ -499,6 +523,25 @@ components:
         userId:
           type: integer
           description: The group id
+    Context:
+      type: object
+      properties:
+        activeUserId:
+          nullable: true
+          type: integer
+          description: The id of the authenticated user.
+          example: 567
+        activeCrewId:
+          nullable: true
+          type: integer
+          description: The id of the authenticated crew.
+          example: 1232
+        activeAdminId:
+          nullable: true
+          type: integer
+          description: The id of the authenticated admin.
+          example: null
+          
     Duration:
       type: object
       properties:
