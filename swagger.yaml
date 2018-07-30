@@ -98,7 +98,7 @@ paths:
         Deletes all related stamps for for a given timestamp (dateTime).
       tags:
         - Time Tracking
-        - Not implemented yet
+        - Not Implemented Yet
       parameters:
         - $ref: '#/components/parameters/crew_id_in_path'
         - $ref: '#/components/parameters/timestamp'
@@ -128,7 +128,7 @@ paths:
     post:
       tags:
         - Time Tracking
-        - Not implemented yet
+        - Not Implemented Yet
       summary: Create multiple correlated stamps.
       parameters:
         - $ref: '#/components/parameters/crew_id_in_path'
@@ -195,7 +195,6 @@ paths:
           in: query
           description: >
             The time granularity on which durations should be grouped by. 
-
             If the paramter is none or unset the api responds the weighted time
             tracking durations for a given date range (start_time, end_time)
             without splitting the durations by a given granularity.
@@ -243,7 +242,6 @@ paths:
             Warning! This parameter might change it's behaviour in the future.
             (Use startTime == endTime == date to get a chain of stamps for a
             point in time)
-
             In the early days of crewmeister it was possible to have multiple
             overlapping work time periods at the same time. In some cases this
             leads to unexpected behaviour. If one wants to render the current
@@ -274,6 +272,33 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Stamp'
+  /crew/{crew_id}/salary-export-configuration:
+    get:
+      summary: Get the configuration for the crew for salary export
+      tags:
+        - Salary Export
+        - Not Implemented Yet
+      parameters:
+        - $ref: '#/components/parameters/crew_id_in_path'
+      responses:
+        200:
+          description: An object containing the configuration for Salary Export for the crew
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SalaryExportConfiguration'
+  
   /prices/config:
     get:
       summary: Get the configuration for the price calculator
@@ -567,4 +592,9 @@ components:
               type: integer
             groupId:
               type: integer
-           
+    SalaryExportConfiguration:
+      type: object
+      properties:
+        crewId:
+          type: integer
+          example: 1
