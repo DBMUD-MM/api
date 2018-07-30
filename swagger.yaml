@@ -3,39 +3,66 @@ info:
   version: '2'
   title: Crewmeister API
   description: |
+
     # Authentication
-    
-    The crewmeister api offers a token based solution for authentication. After generating a token there are 3 different ways on how to send this token to our backend.
-    - Query (hightest priority)
-    - Headers (recommended)
-    - Cookie
-      
-    When multiple tokens are passed to the API the one with the highest priority is used for authentication. The application currently has 3 different authentication types:
-    - user
-    - crew
-    - admin
-    
-    In the future more authentication types might be added. A device can be authenticated as either none, one or many of the above listed authentication types. This means that the device of a crewmeister user can be authenticated as a user and a crew (eg. while in terminal mode). Answering the question **"Who is doing something to whom?"** gets increasingly more complex the more authentication types are added. To  make this question easier to answer we have a model called 'context'. 
-  
+
+    Most API endpoints require a client authentication. The Crewmeister API offers a token-based solution for authentication.
+    After a successful authentication, a token is returned that has to be presented in subsequent calls.
+
+    #### Authentication types
+
+    There are three authentication types:
+    - User authentication: This allows the client to act as a certain crewmeister user. The most typical use case.
+    - Crew authentication: Allows to access certain information from a crew without having to be logged in as as a specific user of this crew. This enables application such as the Terminal Login to show a list of crew members and their current working state.
+    - Admin authentication: For internal administration cases only, not open for third party apps.
+
+    In the future more authentication types might be added. In a single call, a client can be authenticated for none, one or many of the authentication types. E.g., a client  can be authenticated as a user and a crew (eg. while in terminal mode).
+
+    #### Passing tokens and ids to the API
+
+    For each authentication type, there are three ways to send a token (in priority order):
+    1. Via query parameter: `cmUserAuthenticationToken` / `cmCrewAuthenticationToken` / `cmAdminAuthenticationToken`
+    1. Via HTTP header: `X-cmUserAuthenticationToken` / `X-cmCrewAuthenticationToken` / `X-cmAdminAuthenticationToken`
+    1. Via cookie (the HTTP cookie header): `cmUserAuthenticationToken`/ `cmCrewAuthenticationToken` / `cmAdminAuthenticationToken`
+
+    When multiple tokens *for the same authentication type* are passed in a single call, the one with the highest priority is used for authentication.
+
+    In addition to the token, the caller has to send the id of the object the token was issued for with each call. Again, there are three ways to do so:
+
+    1. Via query parameter: `cmUserAuthenticationId` / `cmCrewAuthenticationId` / `cmAdminAuthenticationId`
+    1. Via HTTP header: `X-cmUserAuthenticationId` / `X-cmCrewAuthenticationId` / `X-cmAdminAuthenticationId`
+    1. Via cookie (HTTP cookie header): `cmUserAuthenticationId`/ `cmCrewAuthenticationId` / `cmAdminAuthenticationId`
+
+
+    ### To specify:
+
+    * What happens when the id and the token do not match? Suggest to throw an error
+    * How do tokens become invalid? (time? password change?...)
+    * What happens when a call is made with an invalid token?
+
+    ### Authentication context:
+
+    Answering the question **"Who is doing something to whom?"** gets increasingly more complex the more authentication types are added. To  make this question easier to answer we have a model called 'context'.
+
 servers:
   - url: https://api.crewmeister.com/api/v2
   - url: https://api.crewmeister-stage.com/api/v2
 
 security:
   - headerAuthenticationUserId: []
-    headerAuthenticationUserToken: [] 
+    headerAuthenticationUserToken: []
   - cookieAuthenticationUserId: []
-    cookieAuthenticationUserToken: [] 
+    cookieAuthenticationUserToken: []
   - queryAuthenticationUserId: []
-    queryAuthenticationUserToken: [] 
-  
+    queryAuthenticationUserToken: []
+
 paths:
   /context:
-    get: 
+    get:
       operationId: getContext
       summary: Get the current authentication status.
       description: Returns the ids of the **active** (= authenticated) models.
-      tags: 
+      tags:
         - Authentication
       responses:
         200:
@@ -44,12 +71,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Context'
-  
+
   /user/authentication:
-    post: 
+    post:
       operationId: createUserAuthentication
       summary: Creates a new authentication token for a user.
-      tags: 
+      tags:
         - Authentication
         - User
       requestBody:
@@ -59,13 +86,13 @@ paths:
             schema:
               type: object
               properties:
-                userIdentifier: 
+                userIdentifier:
                   type: string
                   example: "hallo@crewmeister.com"
                 password:
                   type: string
                   example: "super secret"
-          
+
       responses:
         200:
           description: Returns a new authentication token for a user
@@ -73,11 +100,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Token'
-                
-    delete: 
+
+    delete:
       operationId: deleteUserAuthentication
       summary: Invalidates the given authentication token
-      tags: 
+      tags:
         - Authentication
         - User
       parameters:
@@ -89,8 +116,8 @@ paths:
       responses:
         200:
           description: Removes an authentication token for a user
-                
-          
+
+
   '/crew/{crew_id}/time-tracking/stamp-chains':
     delete:
       operationId: deleteStampChain
@@ -194,7 +221,7 @@ paths:
         - name: granularity
           in: query
           description: >
-            The time granularity on which durations should be grouped by. 
+            The time granularity on which durations should be grouped by.
             If the paramter is none or unset the api responds the weighted time
             tracking durations for a given date range (start_time, end_time)
             without splitting the durations by a given granularity.
@@ -298,7 +325,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/SalaryExportConfiguration'
-  
+
   /prices/config:
     get:
       summary: Get the configuration for the price calculator
@@ -417,7 +444,7 @@ components:
       type: apiKey
       in: header
       name: X-cmAuthenticationUserToken
-      
+
     cookieAuthenticationUserId:
       type: apiKey
       in: cookie
@@ -426,7 +453,7 @@ components:
       type: apiKey
       in: cookie
       name: cmAuthenticationUserToken
-      
+
     queryAuthenticationUserId:
       type: apiKey
       in: query
@@ -566,7 +593,7 @@ components:
           type: integer
           description: The id of the authenticated admin.
           example: null
-          
+
     Duration:
       type: object
       properties:
