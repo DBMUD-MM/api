@@ -4,7 +4,7 @@ info:
   title: Crewmeister API
   description: |
 
-    # Authentication
+    ## Authentication
 
     Most API endpoints require a client authentication. The Crewmeister API offers a token-based solution for authentication.
     After a successful authentication, a token is returned that has to be presented in subsequent calls.
@@ -17,6 +17,15 @@ info:
     - Admin authentication: For internal administration cases only, not open for third party apps.
 
     In the future more authentication types might be added. In a single call, a client can be authenticated for none, one or many of the authentication types. E.g., a client  can be authenticated as a user and a crew (eg. while in terminal mode).
+
+    #### Obtaining tokens
+
+    You can obtain a token by posting the authentication data to the API endpoint for the resepective authentication type:
+    - User authentication: `/user/token`
+    - Crew authentcation: `/crew/token`
+    - Admin authentication: `/admin/token`
+
+    If the authentication was successful, you get back the token. Store it together with the id of the object you authenticated as (e.g., the user id for a user authentication).
 
     #### Passing tokens and ids to the API
 
