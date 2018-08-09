@@ -126,6 +126,31 @@ paths:
         200:
           description: Removes an authentication token for a user
 
+  /user:
+    get:
+      tags:
+        - User
+      summary: Get user params
+      description: >
+        The user endpoint returns data related to the signed in user.
+      responses:
+        '200':
+          description: An array containing the data from the signed in user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
 
   '/crew/{crew_id}/time-tracking/stamp-chains':
     delete:
@@ -634,3 +659,26 @@ components:
         crewId:
           type: integer
           example: 1
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          nullable: false
+        name:
+          type: string
+          example: 'A Crewmeister User'
+        username:
+          type: string
+          example: 'a_crewmeister_user'
+          nullable: true
+        email:
+          type: string
+          example: 'email@email.com'
+          nullable: true
+        avatarUrl:
+          type: string
+        language:
+          type: string
+          example: 'en'
