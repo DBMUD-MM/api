@@ -151,6 +151,52 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/User'
+    post:
+      tags:
+        - User
+      summary: Create user
+      description: >
+        Creates a new user.
+      responses:
+        '200':
+          description: Returns the params of the created user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: object
+                    $ref: '#/components/schemas/User'
+    put:
+      tags:
+        - User
+      summary: Update user
+      description: >
+        Updates user params.
+      responses:
+        '200':
+          description: Returns updated user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: object
+                    $ref: '#/components/schemas/User'
 
   '/crew/{crew_id}/time-tracking/stamp-chains':
     delete:
