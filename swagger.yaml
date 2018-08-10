@@ -130,12 +130,12 @@ paths:
     get:
       tags:
         - User
-      summary: Get user params
+      summary: Get user data
       description: >
-        The user endpoint returns data related to the signed in user.
+        The user endpoint returns all users the caller is allowed to see.
       responses:
         '200':
-          description: An array containing the data from the signed in user
+          description: An array containing the data from the users
           content:
             application/json:
               schema:
@@ -156,7 +156,22 @@ paths:
         - User
       summary: Create user
       description: >
-        Creates a new user.
+        Creates a new user with the given params.
+      parameters:
+        - name: email
+          in: query
+          description: >-
+            Given e-mail address.
+          required: false
+          schema:
+            type: string
+        - name: language
+          in: query
+          description: >-
+            Chosen language.
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: Returns the params of the created user
@@ -180,6 +195,28 @@ paths:
       summary: Update user
       description: >
         Updates user params.
+      parameters:
+        - name: userId
+          in: query
+          description: >-
+            The id of the user to be updated.
+          required: true
+          schema:
+            type: integer
+        - name: email
+          in: query
+          description: >-
+            Given e-mail address.
+          required: false
+          schema:
+            type: string
+        - name: language
+          in: query
+          description: >-
+            Chosen language.
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: Returns updated user
