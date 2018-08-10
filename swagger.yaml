@@ -158,6 +158,13 @@ paths:
       description: >
         Creates a new user with the given params.
       parameters:
+        - name: username
+          in: query
+          description: >-
+            Chosen unique username.
+          required: false
+          schema:
+            typ: string
         - name: email
           in: query
           description: >-
@@ -170,6 +177,13 @@ paths:
           description: >-
             Chosen language.
           required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: >-
+            Chosen password.
+          required: true
           schema:
             type: string
       responses:
@@ -203,6 +217,13 @@ paths:
           required: true
           schema:
             type: integer
+        - name: username
+          in: query
+          description: >-
+            Chosen unique username.
+          required: false
+          schema:
+            typ: string
         - name: email
           in: query
           description: >-
@@ -214,6 +235,13 @@ paths:
           in: query
           description: >-
             Chosen language.
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: >-
+            Chosen password.
           required: false
           schema:
             type: string
