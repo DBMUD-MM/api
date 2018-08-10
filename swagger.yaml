@@ -256,7 +256,42 @@ paths:
                   payload:
                     type: object
                     $ref: '#/components/schemas/User'
-    
+                    
+                    
+  /user/{user_id}/avatar:
+    put:
+      tags:
+        - User
+      summary: Update a user avatar image
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer  
+      requestBody:
+        content:
+          image/png:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: Returns the params of the created user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: object
+                    $ref: '#/components/schemas/User'
 
   '/crew/{crew_id}/time-tracking/stamp-chains':
     delete:
