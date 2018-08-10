@@ -154,38 +154,33 @@ paths:
     post:
       tags:
         - User
-      summary: Create user
+      summary: Create a user
       description: >
         Creates a new user with the given params.
-      parameters:
-        - name: username
-          in: query
-          description: >-
-            Chosen unique username.
-          required: false
-          schema:
-            typ: string
-        - name: email
-          in: query
-          description: >-
-            Given e-mail address.
-          required: false
-          schema:
-            type: string
-        - name: language
-          in: query
-          description: >-
-            Chosen language.
-          required: false
-          schema:
-            type: string
-        - name: password
-          in: query
-          description: >-
-            Chosen password.
-          required: true
-          schema:
-            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "myUsername"
+                email:
+                  type: string
+                  example: "my@email.com"
+                language:
+                  type: string
+                  description: en or de are supported right now
+                  default: en
+                  enum:
+                    - de
+                    - en
+                password:
+                  type: string
+                  description: The current password of the user
+                  example: "super secret"
       responses:
         '200':
           description: Returns the params of the created user
@@ -203,51 +198,50 @@ paths:
                   payload:
                     type: object
                     $ref: '#/components/schemas/User'
+  /user/{user_id}:
     put:
       tags:
         - User
-      summary: Update user
+      summary: Update a user
       description: >
-        Updates user params.
+        Creates a new user with the given params.
       parameters:
-        - name: userId
-          in: query
-          description: >-
-            The id of the user to be updated.
+        - name: user_id
+          in: path
           required: true
           schema:
-            type: integer
-        - name: username
-          in: query
-          description: >-
-            Chosen unique username.
-          required: false
-          schema:
-            typ: string
-        - name: email
-          in: query
-          description: >-
-            Given e-mail address.
-          required: false
-          schema:
-            type: string
-        - name: language
-          in: query
-          description: >-
-            Chosen language.
-          required: false
-          schema:
-            type: string
-        - name: password
-          in: query
-          description: >-
-            Chosen password.
-          required: false
-          schema:
-            type: string
+            type: integer  
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "myUsername"
+                email:
+                  type: string
+                  example: "my@email.com"
+                language:
+                  type: string
+                  description: en or de are supported right now
+                  default: en
+                  enum:
+                    - de
+                    - en
+                new_password:
+                  type: string
+                  description: The new password of the user
+                  example: "my new password"
+                password:
+                  type: string
+                  description: The current password of the user
+                  example: "super secret"
       responses:
         '200':
-          description: Returns updated user
+          description: Returns the params of the created user
           content:
             application/json:
               schema:
@@ -262,6 +256,7 @@ paths:
                   payload:
                     type: object
                     $ref: '#/components/schemas/User'
+    
 
   '/crew/{crew_id}/time-tracking/stamp-chains':
     delete:
