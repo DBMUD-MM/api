@@ -259,7 +259,7 @@ paths:
                     
                     
   /user/{user_id}/avatar:
-    put:
+    post:
       tags:
         - User
       summary: Update a user avatar image
