@@ -126,6 +126,32 @@ paths:
         200:
           description: Removes an authentication token for a user
 
+  /crew:
+    get:
+      tags:
+        - Crew
+        - Not Implemented Yet
+      summary: Get crew data
+      description: >
+        The user endpoint returns all crews the caller is allowed to see.
+      responses:
+        '200':
+          description: An array containing the data from the crews
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Crew'
   /user:
     get:
       tags:
@@ -210,7 +236,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer  
+            type: integer
       requestBody:
         required: true
         content:
@@ -256,8 +282,8 @@ paths:
                   payload:
                     type: object
                     $ref: '#/components/schemas/User'
-                    
-                    
+
+
   /user/{user_id}/avatar:
     post:
       tags:
@@ -268,7 +294,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer  
+            type: integer
       requestBody:
         content:
           image/png:
@@ -823,3 +849,21 @@ components:
         language:
           type: string
           example: 'en'
+
+    Crew:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          nullable: false
+        name:
+          type: string
+          example: 'A Crewmeister User'
+        password:
+          type: string
+          example: 'the crew password'
+        owner_id:
+          type: integer
+          example: 1
+          nullable: false
