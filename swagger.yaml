@@ -182,6 +182,37 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Permission'
+
+
+  /crew/{crew_id}/group:
+    get:
+      tags:
+        - Crew
+        - Not Implemented Yet
+      summary: Get permissions
+      description: >
+        The endpoint returns all permissions for the given crew
+        and currently authenticated user.
+      parameters:
+        - $ref: '#/components/parameters/crew_id_in_path'
+      responses:
+        '200':
+          description: An array containing all groups for the crew
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Group'
   /user:
     get:
       tags:
@@ -915,3 +946,21 @@ components:
         allowed:
           type: bool
           example: true
+
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          nullable: false
+        crew_id:
+          type: integer
+          example: 1
+          nullable: false
+        name:
+          type: string
+          example: 'canUseTimeTracking'
+        disabled_at:
+          type: string
+          example: "2000-01-01"
