@@ -927,6 +927,12 @@ components:
           type: integer
           example: 1
           nullable: false
+        trial:
+          type: boolean
+          example: false
+        valid_until:
+          type: string
+          example: '2000-01-01'
 
     Permission:
       type: object
