@@ -157,7 +157,6 @@ paths:
     get:
       tags:
         - Crew
-        - Not Implemented Yet
       summary: Get permissions
       description: >
         The endpoint returns all permissions for the given crew
@@ -183,6 +182,31 @@ paths:
                     items:
                       $ref: '#/components/schemas/Permission'
 
+  /crew/{crew_id}/settings:
+    get:
+      tags:
+        - Crew
+      summary: Get crew settings
+      description: >
+        The endpoint returns the current settings for a crew.
+      parameters:
+        - $ref: '#/components/parameters/crew_id_in_path'
+      responses:
+        '200':
+          description: An object containing all settings for the crew
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    $ref: '#/components/schemas/Settings'
 
   /crew/{crew_id}/group:
     get:
@@ -969,3 +993,24 @@ components:
         disabled_at:
           type: string
           example: "2000-01-01"
+
+    Settings:
+      type: object
+      properties:
+        absence_management_see_all_absences:
+          type: boolean
+          example: true
+        crew_id:
+          type: integer
+          example: 1
+          nullable: false
+        time_tracking_edit_allowed:
+          type: boolean
+          example: false
+        time_tracking_in_future_allowed:
+          type: boolean
+          example: false
+        time_tracking_location:
+          type: integer
+          example: 1
+          nullable: false
