@@ -189,10 +189,9 @@ paths:
       tags:
         - Crew
         - Not Implemented Yet
-      summary: Get permissions
+      summary: Get groups
       description: >
-        The endpoint returns all permissions for the given crew
-        and currently authenticated user.
+        The endpoint returns all groups for a given crew.
       parameters:
         - $ref: '#/components/parameters/crew_id_in_path'
       responses:
@@ -960,7 +959,7 @@ components:
           nullable: false
         name:
           type: string
-          example: 'canUseTimeTracking'
+          example: 'Group 1'
         disabled_at:
           type: string
           example: "2000-01-01"
