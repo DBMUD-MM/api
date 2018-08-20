@@ -1042,7 +1042,6 @@ components:
           type: string
           example: "2000-01-01"
 
-<<<<<<< HEAD
     Member:
       type: object
       properties:
@@ -1091,7 +1090,7 @@ components:
             Right now the avatar image of the user is passed to the client.
             When image is null a default avatar image can be provided by
             the client.
-=======
+
     Settings:
       type: object
       properties:
@@ -1112,4 +1111,3 @@ components:
           type: integer
           example: 1
           nullable: false
->>>>>>> d19c370be647ea0a8892190f3e0c31f88fc36c3e
