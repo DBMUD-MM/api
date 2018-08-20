@@ -152,6 +152,34 @@ paths:
                     items:
                       $ref: '#/components/schemas/Crew'
 
+  /crew/{crew_id}/member:
+    get:
+      tags:
+        - Member
+        - Not Implemented Yet
+      summary: Get members for given crew_id
+      parameters:
+        - $ref: '#/components/parameters/crew_id_in_path'
+      responses:
+        '200':
+          description: An array containing all members for the crew
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Member'
+
+
   /crew/{crew_id}/permission:
     get:
       tags:
@@ -1014,6 +1042,52 @@ components:
         disabled_at:
           type: string
           example: "2000-01-01"
+
+    Member:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          nullable: false
+        user_id:
+          type: integer
+          example: 1
+          nullable: false
+        crew_id:
+          type: integer
+          example: 1
+          nullable: false
+        name:
+          type: string
+          example: "Sepp Huber"
+          nullable: false
+        image:
+            type: string
+            nullable: true
+            example: http://place-hoff.com/300/400
+            description: |
+              Image is used from the user model. When the image is null
+              it's the clients responsibility to add a default avatar
+              image.
+        disabled_at:
+          type: string
+          example: "2000-01-01"
+          nullable: false
+        first_work_day_at:
+          type: string
+          example: "2000-01-01"
+          nullable: true
+        role:
+          type: string
+          enum: [owner, manager, member]
+          nullable: false
+          description: |
+            Ever member has a dedicated role in Crewmeister. The
+            role of an owner is assigned during sign up and can't
+            be changed afterwards. Every member can be promoted to
+            be a manager and with that he has similar permissions
+            as the owner.
 
     Settings:
       type: object
