@@ -152,6 +152,33 @@ paths:
                     items:
                       $ref: '#/components/schemas/Crew'
 
+  /crew/{crew_id}/member:
+    get:
+      tags:
+        - Member
+        - Not Implemented Yet
+      summary: Get members for given crew_id
+      parameters:
+        - $ref: '#/components/parameters/crew_id_in_path'
+      responses:
+        '200':
+          description: An array containing all members for the crew
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Member'
+
   /crew/{crew_id}/permission:
     get:
       tags:
