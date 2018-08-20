@@ -130,7 +130,6 @@ paths:
     get:
       tags:
         - Crew
-        - Not Implemented Yet
       summary: Get crew data
       description: >
         The user endpoint returns all crews the caller is allowed to see.
@@ -157,7 +156,6 @@ paths:
     get:
       tags:
         - Crew
-        - Not Implemented Yet
       summary: Get permissions
       description: >
         The endpoint returns all permissions for the given crew
@@ -188,7 +186,6 @@ paths:
     get:
       tags:
         - Crew
-        - Not Implemented Yet
       summary: Get permissions
       description: >
         The endpoint returns all permissions for the given crew
@@ -566,7 +563,6 @@ paths:
       summary: Get the configuration for the crew for salary export
       tags:
         - Salary Export
-        - Not Implemented Yet
       parameters:
         - $ref: '#/components/parameters/crew_id_in_path'
       responses:
