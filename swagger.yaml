@@ -984,3 +984,52 @@ components:
         disabled_at:
           type: string
           example: "2000-01-01"
+
+    Member:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          nullable: false
+        user_id:
+          type: integer
+          example: 1
+          nullable: false
+        crew_id:
+          type: integer
+          example: 1
+          nullable: false
+        name:
+          type: string
+          example: 'Sepp'
+          nullable: true
+          description: |
+            When not set the name of the user is used. With the right
+            permission the name can be overwritten.
+        disabled_at:
+          type: string
+          example: "2000-01-01"
+          nullable: true
+        first_work_day_at:
+          type: string
+          example: "2000-01-01"
+          nullable: false
+        role:
+          type: string
+          enum: [owner, manager, member]
+          description: |
+            - Owner: The owner is the one who created the crew. This
+              Role is set during sign-up and can't be changed afterwards.
+            - Manager: The manager has similar permissions like the owner.
+            - Member: Has the least permissions in Crewmeister and should
+              be used for regular employees.
+          example: "owner"
+          nullable: false
+        image:
+          type: string
+          nullable: true
+          description: |
+            Right now the avatar image of the user is passed to the client.
+            When image is null a default avatar image can be provided by
+            the client.
