@@ -931,11 +931,35 @@ components:
 
     Permission:
       type: object
+      description: |
+        Crewmeister has an inheritance based permission system. Given
+        the permission `canSeeAbsences`, the upper permission is
+        overwriting the lower permission:
+        - returned by the api and user_id given
+        - returned by the api and user_id null
+        - not returned by the API (defaults to not allowed)
+        ````
+        [{
+          user_id: 1,
+          crew_id: 2,
+          name: 'canSeeAbsences',
+          allowed: false
+        }, {
+          user_id: null,
+          crew_id: 2,
+          name: 'canSeeAbsences',
+          allowed: true
+        }]
+        ````
+        In the example it would be allowed to see all absences of the crew with
+        the ID 2, except for user with the ID 1. A permission `canUseTimeTracking`
+        would default to false as it isn't returned by the API.
+
       properties:
         user_id:
           type: integer
           example: 1
-          nullable: true
+          nullable: false
         crew_id:
           type: integer
           example: 1
