@@ -935,7 +935,7 @@ components:
         user_id:
           type: integer
           example: 1
-          nullable: false
+          nullable: true
         crew_id:
           type: integer
           example: 1
