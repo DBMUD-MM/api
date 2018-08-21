@@ -178,6 +178,39 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Member'
+    delete:
+      tags:
+        - Member
+        - Admin only
+        - Not Implemented Yet
+      summary: Deletes members in the given crew id
+      parameters:
+        - $ref: '#/components/parameters/crew_id_in_path'
+        - name: user_id[]
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+      responses:
+        '200':
+          description: An array containing all members for the crew
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Member'
 
   /crew/{crew_id}/permission:
     get:
