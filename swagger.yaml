@@ -612,9 +612,10 @@ paths:
 
   /crew/{crew_id}/export:
     get:
-      summary: Get an export of the Crewmeister Data
+      summary: Get a spreadsheet export of the Crewmeister data.
       tags:
         - Export
+        - Not Implemented Yet
       parameters:
         - $ref: '#/components/parameters/crew_id_in_path'
         - $ref: '#/components/parameters/from'
@@ -647,7 +648,7 @@ paths:
     get:
       summary: Get the configuration for the crew for salary export
       tags:
-        - Salary Export
+        - Export
       parameters:
         - $ref: '#/components/parameters/crew_id_in_path'
       responses:
