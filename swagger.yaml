@@ -609,6 +609,40 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Stamp'
+
+  /crew/{crew_id}/export:
+    get:
+      summary: Get an export of the Crewmeister Data
+      tags:
+        - Export
+      parameters:
+        - $ref: '#/components/parameters/crew_id_in_path'
+        - $ref: '#/components/parameters/from'
+        - $ref: '#/components/parameters/to'
+        - name: user_id[]
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+        - name: group_id[]
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+
+      responses:
+        200:
+          description: An object containing the configuration for Salary Export for the crew
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+
   /crew/{crew_id}/salary-export-configuration:
     get:
       summary: Get the configuration for the crew for salary export
@@ -822,6 +856,22 @@ components:
       schema:
         type: string
         format: time
+    from:
+      name: from
+      in: query
+      required: true
+      schema:
+        type: string
+        format: date
+        example: '2000-01-01'
+    to:
+      name: to
+      in: query
+      required: true
+      schema:
+        type: string
+        format: date
+        example: '2000-01-01'
   schemas:
     Token:
       type: object
