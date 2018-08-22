@@ -289,7 +289,9 @@ paths:
                     type: integer
                     description: A unique status code.
                   payload:
-                    $ref: '#/components/schemas/Settings'
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Settings'
 
   /crew/{crew_id}/group:
     get:
@@ -667,7 +669,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/Stamp'
 
-  /crew/{crew_id}/export:
+  /crew/{crew_id}/spreadsheet-export:
     get:
       summary: Get a spreadsheet export of the Crewmeister data.
       tags:
