@@ -152,6 +152,30 @@ paths:
                     items:
                       $ref: '#/components/schemas/Crew'
 
+  /crew/{crew_id}:
+    delete:
+      tags:
+        - Crew
+        - Admin only
+      summary:  |
+        Delete a whole crew including all crew related data.
+        The users itself will remain in the system.
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    $ref: '#/components/schemas/Crew'
+
   /crew/{crew_id}/member:
     get:
       tags:
@@ -1144,7 +1168,7 @@ components:
         name:
           type: string
           example: 'Sepp'
-          nullable: true
+          nullable: false
           description: |
             When not set the name of the user is used. With the right
             permission the name can be overwritten.
@@ -1167,13 +1191,47 @@ components:
               be used for regular employees.
           example: "owner"
           nullable: false
-        image:
+
+        avatar_url:
           type: string
           nullable: true
           description: |
             Right now the avatar image of the user is passed to the client.
             When image is null a default avatar image can be provided by
             the client.
+
+        image:
+          type: string
+          nullable: false
+          deprecated: true
+          description: |
+            Will be replaced by avatar_url which is nullable. So we can also
+            get rid of has_image.
+        active_time_account:
+          type: integer
+          nullable: false
+          deprecated: true
+          description: |
+            We're thinking about adding a dedicated /crew/{id}/member-work-state route.
+        email:
+          type: string
+          nullable: true
+          deprecated: true
+        has_image:
+          type: boolean
+          nullable: false
+          deprecated: true
+        is_disabled:
+          type: boolean
+          nullable: false
+          deprecated: true
+          description: Will be replaced by nullable disabled_at.
+        username:
+          type: string
+          nullable: false
+          deprecated: true
+          description: Is a field of the user scheme.
+
 
     Settings:
       type: object
