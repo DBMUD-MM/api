@@ -320,6 +320,43 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Group'
+  /crew/{crew_id}/user/{user_id}:
+    delete:
+      tags:
+        - User
+        - ActiveAdmin
+      description: |
+        Removes a user including all his data from a crew.
+      parameters:
+        - name: crew_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Returns the params of the deleted user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: object
+                    $ref: '#/components/schemas/User'
+
+
   /user:
     get:
       tags:
@@ -393,6 +430,38 @@ paths:
                     type: object
                     $ref: '#/components/schemas/User'
   /user/{user_id}:
+    delete:
+      tags:
+        - User
+        - ActiveAdmin
+      description: |
+        Deletes the user with the given user_id including all his data,
+        in all crews. If he is a crew owner (no customer, no other members
+        in crew) the crew and all relevant information to this crew will
+        be deleted as well.
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Returns the params of the created user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: object
+                    $ref: '#/components/schemas/User'
     put:
       tags:
         - User
