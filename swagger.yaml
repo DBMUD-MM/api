@@ -356,6 +356,35 @@ paths:
                     type: object
                     $ref: '#/components/schemas/User'
 
+  /crew/{crew_id}/geofence:
+    get:
+      tags:
+        - Geofence
+        - Time Tracking
+      parameters:
+        - name: crew_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Returns the params of the deleted user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Geofence'
 
   /user:
     get:
@@ -631,6 +660,7 @@ paths:
               type: array
               items:
                 $ref: '#/components/schemas/Stamp'
+
   '/crew/{crew_id}/time-tracking/durations':
     get:
       summary: Time tracking durations
@@ -1323,4 +1353,29 @@ components:
         time_tracking_location:
           type: integer
           example: 1
+          nullable: false
+
+    Geofence:
+      type: object
+      properties:
+        group_id:
+          type: integer
+          example: 1
+          nullable: false
+        crew_id:
+          type: integer
+          example: 1
+          nullable: false
+        latitude:
+          type: float
+          example: 1.123
+          nullable: false
+        longitude:
+          type: float
+          example: 1.123
+          nullable: false
+        radius:
+          description: Radius is defined in meters.
+          type: float
+          example: 1.123
           nullable: false
