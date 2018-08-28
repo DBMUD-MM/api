@@ -293,6 +293,35 @@ paths:
                     items:
                       $ref: '#/components/schemas/Settings'
 
+  /crew/{crew_id}/group/{group_id}:
+    delete:
+      tags:
+        - Crew
+        - Not Implemented Yet
+      summary: Deletes a group by the given id.
+      parameters:
+        - $ref: '#/components/parameters/crew_id_in_path'
+        - name: group_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The deleted group
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    $ref: '#/components/schemas/Group'
+
   /crew/{crew_id}/group:
     get:
       tags:
