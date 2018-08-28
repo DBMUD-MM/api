@@ -356,8 +356,76 @@ paths:
                     type: object
                     $ref: '#/components/schemas/User'
 
+  /crew/{crew_id}/geofence/{id}:
+    put:
+      tags:
+        - Geofence
+        - Time Tracking
+      parameters:
+        - name: crew_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Returns the params of the deleted user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Geofence'
+    delete:
+      tags:
+        - Geofence
+        - Time Tracking
+      parameters:
+        - name: crew_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Returns the params of the deleted user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Geofence'
+
   /crew/{crew_id}/geofence:
-    get:
+    post:
       tags:
         - Geofence
         - Time Tracking
@@ -370,6 +438,33 @@ paths:
       responses:
         '200':
           description: Returns the params of the deleted user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Geofence'
+    get:
+      tags:
+        - Geofence
+        - Time Tracking
+      parameters:
+        - name: crew_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
           content:
             application/json:
               schema:
@@ -1358,6 +1453,10 @@ components:
     Geofence:
       type: object
       properties:
+        id:
+          type: integer
+          example: 1
+          nullable: false
         group_id:
           type: integer
           example: 1
