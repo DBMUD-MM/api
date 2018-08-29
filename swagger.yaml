@@ -180,7 +180,6 @@ paths:
     get:
       tags:
         - Member
-        - Not Implemented Yet
       summary: Get members for given crew_id
       parameters:
         - $ref: '#/components/parameters/crew_id_in_path'
@@ -1425,13 +1424,6 @@ components:
             When image is null a default avatar image can be provided by
             the client.
 
-        image:
-          type: string
-          nullable: false
-          deprecated: true
-          description: |
-            Will be replaced by avatar_url which is nullable. So we can also
-            get rid of has_image.
         active_time_account:
           type: integer
           nullable: false
@@ -1442,15 +1434,6 @@ components:
           type: string
           nullable: true
           deprecated: true
-        has_image:
-          type: boolean
-          nullable: false
-          deprecated: true
-        is_disabled:
-          type: boolean
-          nullable: false
-          deprecated: true
-          description: Will be replaced by nullable disabled_at.
         username:
           type: string
           nullable: false
