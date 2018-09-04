@@ -246,6 +246,20 @@ paths:
         and currently authenticated user.
       parameters:
         - $ref: '#/components/parameters/crew_id_in_path'
+        - name: user_id[]
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+        - name: name[]
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: An array containing all permissions for the crew
