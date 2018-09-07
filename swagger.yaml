@@ -235,6 +235,31 @@ paths:
                     items:
                       $ref: '#/components/schemas/Member'
 
+  /crew/{crew_id}/member/{user_id}:
+    post:
+      tags:
+        - Member
+      summary: Updates a member
+      parameters:
+        - $ref: '#/components/parameters/crew_id_in_path'
+        - $ref: '#/components/parameters/user_id_in_path'
+      responses:
+        '200':
+          description: The endpoint returns all parameters for the updated member.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    $ref: '#/components/schemas/Member'
+
   /crew/{crew_id}/permission:
     get:
       tags:
@@ -362,6 +387,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Group'
+
   /crew/{crew_id}/user/{user_id}:
     delete:
       tags:
@@ -472,11 +498,7 @@ paths:
         - Geofence
         - Time Tracking
       parameters:
-        - name: crew_id
-          in: path
-          required: true
-          schema:
-            type: integer
+        - $ref: '#/components/parameters/crew_id_in_path'
       responses:
         '200':
           description: Returns the params of the deleted user
@@ -595,6 +617,7 @@ paths:
                   payload:
                     type: object
                     $ref: '#/components/schemas/User'
+
   /user/{user_id}:
     delete:
       tags:
@@ -606,11 +629,7 @@ paths:
         in crew) the crew and all relevant information to this crew will
         be deleted as well.
       parameters:
-        - name: user_id
-          in: path
-          required: true
-          schema:
-            type: integer
+        - $ref: '#/components/parameters/user_id_in_path'
       responses:
         '200':
           description: Returns the params of the created user
@@ -635,11 +654,7 @@ paths:
       description: >
         Creates a new user with the given params.
       parameters:
-        - name: user_id
-          in: path
-          required: true
-          schema:
-            type: integer
+        - $ref: '#/components/parameters/user_id_in_path'
       requestBody:
         required: true
         content:
@@ -686,18 +701,13 @@ paths:
                     type: object
                     $ref: '#/components/schemas/User'
 
-
   /user/{user_id}/avatar:
     post:
       tags:
         - User
       summary: Update a user avatar image
       parameters:
-        - name: user_id
-          in: path
-          required: true
-          schema:
-            type: integer
+        - $ref: '#/components/parameters/user_id_in_path'
       requestBody:
         content:
           image/png:
@@ -856,6 +866,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Duration'
+
   '/crew/{crew_id}/time-tracking/stamps':
     get:
       summary: Time tracking stamps
@@ -1010,6 +1021,7 @@ paths:
                             name:
                               type: string
                               example: 1-10
+
   /prices/calculate:
     get:
       summary: Calculate a product price
@@ -1104,6 +1116,12 @@ components:
   parameters:
     crew_id_in_path:
       name: crew_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    user_id_in_path:
+      name: user_id
       in: path
       required: true
       schema:
