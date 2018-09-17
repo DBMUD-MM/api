@@ -157,17 +157,19 @@ paths:
       summary: Create a crew
       description: >
         This endpoint creates a crew and returns it.
-      parameters:
-        - name: user_id
-          in: query
-          required: true
-          schema:
-            type: integer
-        - name: name
-          in: query
-          required: true
-          schema:
-            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "New Crew Name"
+                user_id:
+                  type: integer
+                  example: 99999
       responses:
         '200':
           description: An object containing data for the crew created
@@ -267,6 +269,57 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Member'
+    post:
+      tags:
+        - Member
+      summary: Create a member in a crew
+      description: >
+        This endpoint creates a new member in a crew and returns it
+      parameters:
+        - $ref: '#/components/parameters/crew_id_in_path'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Sepp"
+                username:
+                  type: string
+                  example: "myUsername"
+                email:
+                  type: string
+                  example: "my@email.com"
+                language:
+                  type: string
+                  description: en or de are supported right now
+                  default: en
+                  enum:
+                    - de
+                    - en
+                password:
+                  type: string
+                  description: The current password of the user
+                  example: "super secret"
+      responses:
+        '200':
+          description: An object containing data for the crew created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    $ref: '#/components/schemas/Member'
 
   /crew/{crew_id}/member/{user_id}:
     post:
