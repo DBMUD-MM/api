@@ -151,6 +151,39 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Crew'
+    post:
+      tags:
+        - Crew
+      summary: Create a crew
+      description: >
+        This endpoint creates a crew and returns it.
+      parameters:
+        - name: user_id
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: An object containing data for the crew created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    $ref: '#/components/schemas/Crew'
 
   /crew/{crew_id}:
     delete:
