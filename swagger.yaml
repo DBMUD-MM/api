@@ -167,6 +167,9 @@ paths:
                 name:
                   type: string
                   example: "New Crew Name"
+                crew_id:
+                  type: integer
+                  example: 99999
                 user_id:
                   type: integer
                   example: 99999
