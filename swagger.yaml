@@ -126,6 +126,51 @@ paths:
         200:
           description: Removes an authentication token for a user
 
+
+  /crew/authentication:
+    post:
+      operationId: createCrewAuthentication
+      summary: Creates a new authentication token for a crew.
+      tags:
+        - Not Implemented Yet
+        - Authentication
+        - Crew
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                  example: 1234
+
+      responses:
+        200:
+          description: Returns a new authentication token for a crew
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+
+    delete:
+      operationId: deleteCrewAuthentication
+      summary: Invalidates the given authentication token
+      tags:
+        - Not Implemented Yet
+        - Authentication
+        - Crew
+      parameters:
+        - in: query
+          name: all
+          schema:
+            type: boolean
+          description: Invalidates all existing crew authentication tokens for the currently authenticated crew.
+      responses:
+        200:
+          description: Removes an authentication token for a crew
+
   /crew:
     get:
       tags:
