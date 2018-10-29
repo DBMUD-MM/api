@@ -126,13 +126,11 @@ paths:
         200:
           description: Removes an authentication token for a user
 
-
   /crew/authentication:
     post:
       operationId: createCrewAuthentication
       summary: Creates a new authentication token for a crew.
       tags:
-        - Not Implemented Yet
         - Authentication
         - Crew
       requestBody:
@@ -158,7 +156,6 @@ paths:
       operationId: deleteCrewAuthentication
       summary: Invalidates the given authentication token
       tags:
-        - Not Implemented Yet
         - Authentication
         - Crew
       parameters:
@@ -562,7 +559,6 @@ paths:
     put:
       tags:
         - Geofence
-        - Time Tracking
       parameters:
         - name: crew_id
           in: path
@@ -595,7 +591,6 @@ paths:
     delete:
       tags:
         - Geofence
-        - Time Tracking
       parameters:
         - name: crew_id
           in: path
@@ -630,7 +625,6 @@ paths:
     post:
       tags:
         - Geofence
-        - Time Tracking
       parameters:
         - $ref: '#/components/parameters/crew_id_in_path'
       responses:
@@ -654,7 +648,6 @@ paths:
     get:
       tags:
         - Geofence
-        - Time Tracking
       parameters:
         - name: crew_id
           in: path
@@ -678,6 +671,195 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Geofence'
+
+  /crew/{crew_id}/usage-right:
+    get:
+      tags:
+        - Usage Rights
+      summary: Get all usage rights for a crew
+      description: >
+        This endpoint returns an array of usage rights for a crew
+      parameters:
+        - $ref: '#/components/parameters/crew_id_in_path'
+        - name: id[]
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+        - name: active
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: deleted
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: An array of usage rights
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UsageRight'
+    post:
+      tags:
+        - Usage Rights
+      summary: Create a usage right for a crew
+      description: >
+        This endpoint creates a new usage right for a crew and returns it
+      parameters:
+        - $ref: '#/components/parameters/crew_id_in_path'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subscription_id:
+                  type: integer
+                  example: 1
+                crew_id:
+                  type: integer
+                  example: 1
+                max_crew_size:
+                  type: integer
+                  example: 15
+                bitmask:
+                  type: integer
+                  example: 3
+                trial:
+                  type: boolean
+                  example: true
+                source:
+                  type: string
+                  example: "customer/start_trial"
+                valid_until:
+                  type: string
+                  example: '2000-01-01'
+      responses:
+        '200':
+          description: An object containing data for the usage right created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    $ref: '#/components/schemas/UsageRight'
+    put:
+      tags:
+        - Usage Rights
+      summary: Update a usage right for a crew
+      description: >
+        This endpoint updates a new usage right for a crew and returns it
+      parameters:
+        - $ref: '#/components/parameters/crew_id_in_path'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: array
+                  items:
+                    type: integer
+                subscription_id:
+                  type: integer
+                  example: 1
+                crew_id:
+                  type: integer
+                  example: 1
+                active:
+                  type: boolean
+                  example: true
+                deleted:
+                  type: string
+                  example: '2000-01-01'
+                max_crew_size:
+                  type: integer
+                  example: 15
+                bitmask:
+                  type: integer
+                  example: 3
+                trial:
+                  type: boolean
+                  example: true
+                valid_until:
+                  type: string
+                  example: '2000-01-01'
+      responses:
+        '200':
+          description: An object containing data for the usage right created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UsageRight'
+    delete:
+      tags:
+        - Usage Rights
+      summary: Delete usage rights for a crew
+      description: >
+        This endpoint deletes a set of usage rights for a crew and returns the deleted values
+      parameters:
+        - $ref: '#/components/parameters/crew_id_in_path'
+        - name: active
+          in: query
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: An array of usage rights
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A simple status message.
+                  status_code:
+                    type: integer
+                    description: A unique status code.
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UsageRight'
 
   /user:
     get:
@@ -866,7 +1048,7 @@ paths:
                     type: object
                     $ref: '#/components/schemas/User'
 
-  '/crew/{crew_id}/time-tracking/stamp-chains':
+  /crew/{crew_id}/time-tracking/stamp-chains:
     delete:
       operationId: deleteStampChain
       description: |
@@ -942,7 +1124,7 @@ paths:
               items:
                 $ref: '#/components/schemas/Stamp'
 
-  '/crew/{crew_id}/time-tracking/durations':
+  /crew/{crew_id}/time-tracking/durations:
     get:
       summary: Time tracking durations
       description: >
@@ -1001,7 +1183,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/Duration'
 
-  '/crew/{crew_id}/time-tracking/stamps':
+  /crew/{crew_id}/time-tracking/stamps:
     get:
       summary: Time tracking stamps
       description: >
@@ -1055,7 +1237,6 @@ paths:
       summary: Get a spreadsheet export of the Crewmeister data.
       tags:
         - Export
-        - Not Implemented Yet
       parameters:
         - $ref: '#/components/parameters/crew_id_in_path'
         - $ref: '#/components/parameters/from'
@@ -1581,7 +1762,6 @@ components:
               be used for regular employees.
           example: "owner"
           nullable: false
-
         avatar_url:
           type: string
           nullable: true
@@ -1589,7 +1769,6 @@ components:
             Right now the avatar image of the user is passed to the client.
             When image is null a default avatar image can be provided by
             the client.
-
         active_time_account:
           type: integer
           nullable: false
@@ -1605,7 +1784,6 @@ components:
           nullable: false
           deprecated: true
           description: Is a field of the user scheme.
-
 
     Settings:
       type: object
@@ -1656,3 +1834,43 @@ components:
           type: float
           example: 1.123
           nullable: false
+
+    UsageRight:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          nullable: false
+        bitmask:
+          type: integer
+          example: 3
+          nullable: false
+        created_at:
+          type: string
+          example: "2000-01-01"
+        crew_id:
+          type: integer
+          example: 1
+          nullable: false
+        deleted:
+          type: string
+          example: "2000-01-01"
+        source:
+          type: string
+          example: "customer/start_trial"
+        subscription_id:
+          type: integer
+          example: 1
+        team_size:
+          type: integer
+          example: 15
+        trial:
+          type: boolean
+          example: true
+        updated_at:
+          type: string
+          example: "2000-01-01"
+        valid_until:
+          type: string
+          example: "2000-01-01"
